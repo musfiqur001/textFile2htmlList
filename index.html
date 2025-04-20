@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text File Viewer</title>
+    <style>
+        #file-content {
+            margin: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+
+        .error-message {
+            color: red;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="file-content">Loading...</div>
+
+    <script>
+        // JavaScript solution using AJAX
+        fetch('yourfile.txt')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(data => {
+                const container = document.getElementById('file-content');
+                container.textContent = data;
+            })
+            .catch(error => {
+                const container = document.getElementById('file-content');
+                container.className = 'error-message';
+                container.textContent = `Error loading file: ${error.message}`;
+            });
+    </script>
+</body>
+</html>
